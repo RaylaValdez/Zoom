@@ -4,7 +4,7 @@
   <GroupId>raylavaldez/Zoom</GroupId>
   <FriendlyName>Zoom</FriendlyName>
   <Author>Rayla Valdez</Author>
-  <Commit></Commit>
+  <Commit>68d78256cdffec132056d58c7be2f2e455575738</Commit>
   <SourceDirectories>
     <Directory>ClientPlugin</Directory>
   </SourceDirectories>
