@@ -72,7 +72,7 @@ namespace ClientPlugin
 
                 if (desiredFOV == -1)
                 {
-                    desiredFOV = currFov;
+                    desiredFOV = MyAPIGateway.Session.Config.FieldOfView;
                     originalFOV = desiredFOV;
                     modFOV = desiredFOV;
                     return;
@@ -82,19 +82,30 @@ namespace ClientPlugin
                 {
                     if (MyAPIGateway.Input.IsNewKeyPressed((MyKeys)Plugin.Instance.Config.BindingKey))
                     {
-                        if (lastPress >= 0)
+                        if (Plugin.Instance.Config.ToggleFeature)
                         {
-                            toggledFOV = !toggledFOV;
+                            if (lastPress > 0)
+                            {
+                                toggledFOV = !toggledFOV; // Double press toggles
+                            }
+                            lastPress = 25;
                         }
-                        lastPress = 25;
+                        else
+                        {
+                            lastPress = 25; // Regular single press hold mode
+                        }
                     }
 
-                    if (MyAPIGateway.Input.IsKeyPress((MyKeys)Plugin.Instance.Config.BindingKey) || toggledFOV)
+                    bool keyHeld = MyAPIGateway.Input.IsKeyPress((MyKeys)Plugin.Instance.Config.BindingKey);
+                    if (keyHeld || (Plugin.Instance.Config.ToggleFeature && toggledFOV))
                     {
-                        float delta = MyAPIGateway.Input.DeltaMouseScrollWheelValue();
-                        if (MyAPIGateway.Input.IsKeyPress((MyKeys)Plugin.Instance.Config.BindingKey) && delta != 0)
+                        if (keyHeld) // Ensure scroll only works when key is actively held
                         {
-                            desiredFOV = MathHelper.Clamp(desiredFOV - MathHelper.ToRadians(delta / 100f), 0.018f, 2.5f);
+                            float delta = MyAPIGateway.Input.DeltaMouseScrollWheelValue();
+                            if (delta != 0)
+                            {
+                                desiredFOV = MathHelper.Clamp(desiredFOV - MathHelper.ToRadians(delta / 100f), 0.018f, 2.5f);
+                            }
                         }
                         if (Math.Round(desiredFOV, 2) != Math.Round(currFov, 2))
                         {
@@ -114,13 +125,14 @@ namespace ClientPlugin
                 {
                     SetToDesiredFov(modFOV);
                 }
-
             }
             else
             {
                 desiredFOV = -1;
             }
         }
+
+
 
         private void SetToDesiredFov(float fov)
         {

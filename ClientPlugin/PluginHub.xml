@@ -12,6 +12,6 @@
   <Description>
 Plugin that allows for dynamic zooming for getting a peek at that pesky ship closing in.
     
-Credits go to Github user 'Math0424' for creating ScrollableFOV and then not including a config screen.
+Credits go to Github user 'Math0424' for creating ScrollableFOV.
   </Description>
 </PluginData>

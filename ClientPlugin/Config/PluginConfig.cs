@@ -37,6 +37,14 @@ namespace ClientPlugin.Config
             get => bindingKey;
             set => SetValue(ref bindingKey, value);
         }
+
+        private bool toggleFeature = true;
+
+        public bool ToggleFeature
+        {
+            get => toggleFeature;
+            set => SetValue(ref toggleFeature, value);
+        }
     }
 }
 

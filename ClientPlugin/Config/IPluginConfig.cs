@@ -5,5 +5,7 @@ namespace ClientPlugin.Config
     public interface IPluginConfig: INotifyPropertyChanged
     {
         byte BindingKey { get; set; }
+
+        bool ToggleFeature { get; set; }
     }
 }
